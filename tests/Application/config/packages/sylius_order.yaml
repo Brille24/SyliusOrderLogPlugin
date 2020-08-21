@@ -1,0 +1,5 @@
+sylius_order:
+  resources:
+    order:
+      classes:
+        model: 'Brille24\SyliusOrderLogPlugin\Entity\Order'

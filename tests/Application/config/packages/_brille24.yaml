@@ -1,0 +1,14 @@
+sylius_resource:
+  resources:
+    brille24.order_log_entry:
+      classes:
+        model: 'Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry'
+        interface: 'Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntryInterface'
+    brille24.payment_log_entry:
+      classes:
+        model: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry'
+        interface: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntryInterface'
+    brille24.shipment_log_entry:
+      classes:
+        model: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry'
+        interface: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntryInterface'

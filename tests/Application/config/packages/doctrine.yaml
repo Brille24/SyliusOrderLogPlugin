@@ -12,11 +12,3 @@ doctrine:
         charset: UTF8
 
         url: '%env(resolve:DATABASE_URL)%'
-
-    orm:
-        mappings:
-            Application:
-                is_bundle: false
-                type: 'yml'
-                dir: '%kernel.project_dir%/src/Resources/config/doctrine'
-                prefix: 'Tests\Brille24\SyliusOrderLogPlugin\Application\src\Entity'

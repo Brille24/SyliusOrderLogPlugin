@@ -1,3 +1,21 @@
 <container xmlns="http://symfony.com/schema/dic/services">
 
+    <services>
+        <service class="Brille24\SyliusOrderLogPlugin\Listener\OrderListener" id="brille24.sylius_order_log_plugin.listener.order_listener">
+            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+        <service class="Brille24\SyliusOrderLogPlugin\Listener\PaymentListener" id="brille24.sylius_order_log_plugin.listener.payment_listener">
+            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+        <service class="Brille24\SyliusOrderLogPlugin\Listener\ShipmentListener" id="brille24.sylius_order_log_plugin.listener.shipment_listener">
+            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+    </services>
+
 </container>
