@@ -1,0 +1,5 @@
+sylius_payment:
+  resources:
+    payment:
+      classes:
+        model: 'Brille24\SyliusOrderLogPlugin\Entity\Payment'
