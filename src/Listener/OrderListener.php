@@ -7,7 +7,6 @@ namespace Brille24\SyliusOrderLogPlugin\Listener;
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -109,6 +108,7 @@ class OrderListener implements EventSubscriberInterface
     {
         return [
             OrderLogEvent::class => 'logOrder',
+            'sylius.order.post_complete' => 'createOrder',
             'sylius.order.post_create' => 'createOrder',
             'sylius.order.post_update' => 'updateOrder',
             'sylius.order.post_delete' => 'deleteOrder',
@@ -120,10 +120,6 @@ class OrderListener implements EventSubscriberInterface
 
     private function getLogEvent(OrderInterface $order, string $action): OrderLogEvent
     {
-        return new OrderLogEvent(
-            $order,
-            $action,
-            $order->getLoggableData()
-        );
+        return new OrderLogEvent($order, $action, $order->getLoggableData());
     }
 }

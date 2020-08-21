@@ -34,7 +34,7 @@ trait PaymentLoggableTrait
             'method' => null !== $this->getMethod() ? $this->getMethod()->getCode() : null,
             'currencyCode' => $this->getCurrencyCode(),
             'amount' => $this->getAmount(),
-            'details' => $this->getDetails(),
+            'details' => json_encode($this->getDetails(), JSON_THROW_ON_ERROR),
         ];
     }
 }

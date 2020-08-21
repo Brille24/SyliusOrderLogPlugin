@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
-use Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry;
 use Brille24\SyliusOrderLogPlugin\Entity\ShipmentInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry;
-use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
-use Brille24\SyliusOrderLogPlugin\Event\PaymentLogEvent;
 use Brille24\SyliusOrderLogPlugin\Event\ShipmentLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -46,7 +41,10 @@ class ShipmentListener implements EventSubscriberInterface
         // Rebuild last logged data
         $loggedData = [];
         /** @var LogEntryInterface $log */
-        foreach ($this->shipmentLogRepository->findBy(['shipment' => $event->getShipment()], ['date' => 'ASC']) as $log) {
+        foreach ($this->shipmentLogRepository->findBy(
+            ['shipment' => $event->getShipment()],
+            ['date' => 'ASC']
+        ) as $log) {
             $loggedData = array_merge($loggedData, $log->getData());
         }
 
@@ -107,10 +105,6 @@ class ShipmentListener implements EventSubscriberInterface
 
     private function getLogEvent(ShipmentInterface $shipment, string $action): ShipmentLogEvent
     {
-        return new ShipmentLogEvent(
-            $shipment,
-            $action,
-            $shipment->getLoggableData()
-        );
+        return new ShipmentLogEvent($shipment, $action, $shipment->getLoggableData());
     }
 }

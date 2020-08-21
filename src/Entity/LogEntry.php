@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Entity;
 
-
 use Sylius\Component\Core\Model\AdminUserInterface;
 
 abstract class LogEntry implements LogEntryInterface

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "ext-json": "*",
 
         "sylius/sylius": "^1.7.5"
     },
@@ -49,5 +50,13 @@
         "branch-alias": {
             "dev-master": "1.7-dev"
         }
+    },
+    "scripts": {
+        "analyse": [
+            "vendor/bin/ecs check src --config etc/coding-standard.yml --no-progress-bar"
+        ],
+        "fix": [
+            "vendor/bin/ecs check src --config etc/coding-standard.yml --fix --ansi"
+        ]
     }
 }

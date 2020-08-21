@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
 use Brille24\SyliusOrderLogPlugin\Entity\PaymentInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry;
-use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Brille24\SyliusOrderLogPlugin\Event\PaymentLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -105,10 +102,6 @@ class PaymentListener implements EventSubscriberInterface
 
     private function getLogEvent(PaymentInterface $payment, string $action): PaymentLogEvent
     {
-        return new PaymentLogEvent(
-            $payment,
-            $action,
-            $payment->getLoggableData()
-        );
+        return new PaymentLogEvent($payment, $action, $payment->getLoggableData());
     }
 }

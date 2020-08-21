@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Event;
 
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 abstract class LogEvent extends GenericEvent

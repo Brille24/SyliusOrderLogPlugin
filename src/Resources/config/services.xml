@@ -11,11 +11,13 @@
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="brille24.repository.payment_log_entry" />
         </service>
         <service class="Brille24\SyliusOrderLogPlugin\Listener\ShipmentListener" id="brille24.sylius_order_log_plugin.listener.shipment_listener">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="brille24.repository.shipment_log_entry" />
         </service>
     </services>
 
