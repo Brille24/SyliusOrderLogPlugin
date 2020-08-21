@@ -15,7 +15,7 @@ abstract class LogEvent extends GenericEvent
     /** @var array<mixed> */
     private $data;
 
-    public function __construct(OrderInterface $subject, string $action, array $data)
+    public function __construct($subject, string $action, array $data)
     {
         parent::__construct($subject);
 

@@ -4,28 +4,17 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Brille24\SyliusOrderLogPlugin\OrderLoggableTrait;
 
 class Order extends \Sylius\Component\Core\Model\Order implements OrderInterface
 {
-    /** @var Collection */
-    protected $logEntries;
+    use OrderLoggableTrait {
+        __construct as loggableConstructor;
+    }
 
     public function __construct()
     {
-        $this->logEntries = new ArrayCollection();
-
+        $this->loggableConstructor();
         parent::__construct();
-    }
-
-    public function getLogEntries(): Collection
-    {
-        return $this->logEntries;
-    }
-
-    public function setLogEntries(Collection $logEntries): void
-    {
-        $this->logEntries = $logEntries;
     }
 }

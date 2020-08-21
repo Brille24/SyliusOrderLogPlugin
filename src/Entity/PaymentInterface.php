@@ -6,9 +6,6 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
-interface PaymentInterface extends \Sylius\Component\Core\Model\PaymentInterface
+interface PaymentInterface extends \Sylius\Component\Core\Model\PaymentInterface, LoggableInterface
 {
-    public function getLogEntries(): Collection;
-
-    public function setLogEntries(Collection $logEntries): void;
 }

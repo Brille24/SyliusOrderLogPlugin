@@ -7,10 +7,12 @@ namespace Brille24\SyliusOrderLogPlugin\Listener;
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
+use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\AdminUserInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -22,27 +24,42 @@ class OrderListener implements EventSubscriberInterface
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
-    {
+    /** @var RepositoryInterface */
+    protected $orderLogRepository;
+
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        EntityManagerInterface $entityManager,
+        RepositoryInterface $orderLogRepository
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
+        $this->orderLogRepository = $orderLogRepository;
     }
 
     public function logOrder(OrderLogEvent $event): void
     {
-        // @TODO: Check previous logs for differences
+        // Rebuild last logged data
+        $loggedData = [];
+        /** @var LogEntryInterface $log */
+        foreach ($this->orderLogRepository->findBy(['order' => $event->getOrder()], ['date' => 'ASC']) as $log) {
+            $loggedData = array_merge($loggedData, $log->getData());
+        }
 
+        // Get data difference
+        $difference = array_diff_assoc($event->getData(), $loggedData);
+
+        // Save difference to that state
         $logEntry = new OrderLogEntry();
 
         $user = $this->tokenStorage->getToken()->getUser();
-
         if ($user instanceof AdminUserInterface) {
             $logEntry->setUser($user);
         }
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setOrder($event->getOrder());
-        $logEntry->setData($event->getData());
+        $logEntry->setData($difference);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();
@@ -106,12 +123,7 @@ class OrderListener implements EventSubscriberInterface
         return new OrderLogEvent(
             $order,
             $action,
-            [
-                'state' => $order->getState(),
-                'checkoutState' => $order->getCheckoutState(),
-                'paymentState' => $order->getPaymentState(),
-                'shippingState' => $order->getShippingState(),
-            ]
+            $order->getLoggableData()
         );
     }
 }

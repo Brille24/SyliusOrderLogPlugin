@@ -5,6 +5,7 @@
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="brille24.repository.order_log_entry" />
         </service>
         <service class="Brille24\SyliusOrderLogPlugin\Listener\PaymentListener" id="brille24.sylius_order_log_plugin.listener.payment_listener">
             <tag name="kernel.event_subscriber" />
