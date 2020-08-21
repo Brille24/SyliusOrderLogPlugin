@@ -1,0 +1,10 @@
+brille24_admin_partial_payment_log_entry_index:
+  path: /log-entry/{id}
+  methods: [GET]
+  defaults:
+    _controller: brille24.controller.payment_log_entry:indexAction
+    _sylius:
+      template: "@SyliusUi/Grid/_history.html.twig"
+      grid: brille24_admin_payment_log_entry
+      section: admin
+      permission: true

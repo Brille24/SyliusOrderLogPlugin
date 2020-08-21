@@ -6,16 +6,16 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 class OrderLogEntry extends LogEntry implements OrderLogEntryInterface
 {
-    /** @var OrderInterface */
-    protected $order;
+    /** @var int */
+    protected $orderId;
 
-    public function getOrder(): OrderInterface
+    public function getOrderId(): int
     {
-        return $this->order;
+        return $this->orderId;
     }
 
-    public function setOrder(OrderInterface $order): void
+    public function setOrderId(int $orderId): void
     {
-        $this->order = $order;
+        $this->orderId = $orderId;
     }
 }

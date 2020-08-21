@@ -4,12 +4,12 @@
             <generator strategy="AUTO" />
         </id>
 
+        <field name="orderId" type="integer" column="order_id" />
+        <field name="shipmentId" type="integer" column="shipment_id" />
         <field name="date" type="datetime" />
         <field name="action" />
         <field name="data" type="json" />
 
         <many-to-one field="user" target-entity="Sylius\Component\Core\Model\AdminUserInterface"/>
-        <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface" inversed-by="logEntries"/>
-        <many-to-one field="shipment" target-entity="Sylius\Component\Shipping\Model\ShipmentInterface" inversed-by="logEntries"/>
     </mapped-superclass>
 </doctrine-mapping>

@@ -6,11 +6,11 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 interface ShipmentLogEntryInterface
 {
-    public function getOrder(): OrderInterface;
+    public function getOrderId(): int;
 
-    public function setOrder(OrderInterface $order): void;
+    public function setOrderId(int $order): void;
 
-    public function getShipment(): ShipmentInterface;
+    public function getShipmentId(): int;
 
-    public function setShipment(ShipmentInterface $shipment): void;
+    public function setShipmentId(int $shipment): void;
 }

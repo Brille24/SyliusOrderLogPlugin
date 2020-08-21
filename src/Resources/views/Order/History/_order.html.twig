@@ -1,0 +1,8 @@
+<div class="column">
+    <h4 class="ui top attached styled header">
+        {{ ('sylius.ui.order')|trans }}
+    </h4>
+    <div class="ui attached segment" id="order-changes">
+        {{ render(url('brille24_admin_partial_order_log_entry_index', {'id': order.id})) }}
+    </div>
+</div>

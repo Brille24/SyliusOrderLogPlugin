@@ -6,7 +6,7 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 interface OrderLogEntryInterface extends LogEntryInterface
 {
-    public function getOrder(): OrderInterface;
+    public function getOrderId(): int;
 
-    public function setOrder(OrderInterface $order): void;
+    public function setOrderId(int $order): void;
 }

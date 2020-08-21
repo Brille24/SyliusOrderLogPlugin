@@ -6,29 +6,29 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 class ShipmentLogEntry extends LogEntry implements ShipmentLogEntryInterface
 {
-    /** @var OrderInterface */
-    protected $order;
+    /** @var int */
+    protected $orderId;
 
-    /** @var ShipmentInterface */
-    protected $shipment;
+    /** @var int */
+    protected $shipmentId;
 
-    public function getOrder(): OrderInterface
+    public function getOrderId(): int
     {
-        return $this->order;
+        return $this->orderId;
     }
 
-    public function setOrder(OrderInterface $order): void
+    public function setOrderId(int $orderId): void
     {
-        $this->order = $order;
+        $this->orderId = $orderId;
     }
 
-    public function getShipment(): ShipmentInterface
+    public function getShipmentId(): int
     {
-        return $this->shipment;
+        return $this->shipmentId;
     }
 
-    public function setShipment(ShipmentInterface $shipment): void
+    public function setShipmentId(int $shipmentId): void
     {
-        $this->shipment = $shipment;
+        $this->shipmentId = $shipmentId;
     }
 }

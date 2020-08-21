@@ -1,0 +1,32 @@
+sylius_grid:
+    grids:
+        brille24_admin_shipment_log_entry:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%brille24.model.shipment_log_entry.class%"
+                    repository:
+                        method: findBy
+                        arguments:
+                            criteria: { shipmentId: $id }
+            fields:
+                action:
+                    type: twig
+                    label: sylius.ui.action
+                    options:
+                        template: "@SyliusUi/Grid/Field/logAction.html.twig"
+                date:
+                    type: datetime
+                    label: sylius.ui.logged_at
+                    options:
+                        format: d-m-Y H:i:s
+                user:
+                    type: twig
+                    label: sylius.ui.user
+                    options:
+                        template: "@Brille24SyliusOrderLogPlugin/Grid/Field/user.html.twig"
+                data:
+                    type: twig
+                    label: sylius.ui.changes
+                    options:
+                        template: "@SyliusUi/Grid/Field/logData.html.twig"

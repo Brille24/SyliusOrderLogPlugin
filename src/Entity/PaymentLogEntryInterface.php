@@ -6,11 +6,11 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 interface PaymentLogEntryInterface
 {
-    public function getOrder(): OrderInterface;
+    public function getOrderId(): int;
 
-    public function setOrder(OrderInterface $order): void;
+    public function setOrderId(int $order): void;
 
-    public function getPayment(): PaymentInterface;
+    public function getPaymentId(): int;
 
-    public function setPayment(PaymentInterface $payment): void;
+    public function setPaymentId(int $payment): void;
 }

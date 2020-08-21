@@ -41,7 +41,7 @@ class OrderListener implements EventSubscriberInterface
         // Rebuild last logged data
         $loggedData = [];
         /** @var LogEntryInterface $log */
-        foreach ($this->orderLogRepository->findBy(['order' => $event->getOrder()], ['date' => 'ASC']) as $log) {
+        foreach ($this->orderLogRepository->findBy(['orderId' => $event->getOrder()->getId()], ['date' => 'ASC']) as $log) {
             $loggedData = array_merge($loggedData, $log->getData());
         }
 
@@ -57,7 +57,7 @@ class OrderListener implements EventSubscriberInterface
         }
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
-        $logEntry->setOrder($event->getOrder());
+        $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setData($difference);
 
         $this->entityManager->persist($logEntry);

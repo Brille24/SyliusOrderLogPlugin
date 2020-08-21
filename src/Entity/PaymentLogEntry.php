@@ -6,29 +6,29 @@ namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 class PaymentLogEntry extends LogEntry implements PaymentLogEntryInterface
 {
-    /** @var OrderInterface */
-    protected $order;
+    /** @var int */
+    protected $orderId;
 
-    /** @var PaymentInterface */
-    protected $payment;
+    /** @var int */
+    protected $paymentId;
 
-    public function getOrder(): OrderInterface
+    public function getOrderId(): int
     {
-        return $this->order;
+        return $this->orderId;
     }
 
-    public function setOrder(OrderInterface $order): void
+    public function setOrderId(int $orderId): void
     {
-        $this->order = $order;
+        $this->orderId = $orderId;
     }
 
-    public function getPayment(): PaymentInterface
+    public function getPaymentId(): int
     {
-        return $this->payment;
+        return $this->paymentId;
     }
 
-    public function setPayment(PaymentInterface $payment): void
+    public function setPaymentId(int $paymentId): void
     {
-        $this->payment = $payment;
+        $this->paymentId = $paymentId;
     }
 }

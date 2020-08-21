@@ -8,13 +8,5 @@ use Brille24\SyliusOrderLogPlugin\OrderLoggableTrait;
 
 class Order extends \Sylius\Component\Core\Model\Order implements OrderInterface
 {
-    use OrderLoggableTrait {
-        __construct as loggableConstructor;
-    }
-
-    public function __construct()
-    {
-        $this->loggableConstructor();
-        parent::__construct();
-    }
+    use OrderLoggableTrait;
 }

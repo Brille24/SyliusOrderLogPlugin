@@ -1,0 +1,10 @@
+<div class="column">
+    <h4 class="ui top attached styled header">
+        {{ ('sylius.ui.payment')|trans }}
+    </h4>
+    {% for payment in order.payments %}
+        <div class="ui attached segment" id="order-changes">
+            {{ render(url('brille24_admin_partial_payment_log_entry_index', {'id': payment.id})) }}
+        </div>
+    {% endfor %}
+</div>

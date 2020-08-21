@@ -1,5 +1,4 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <mapped-superclass name="Brille24\SyliusOrderLogPlugin\Entity\Payment" table="sylius_payment">
-        <one-to-many field="logEntries" target-entity="Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry" mapped-by="payment"/>
     </mapped-superclass>
 </doctrine-mapping>
