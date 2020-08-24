@@ -1,9 +1,16 @@
 <div class="column">
     <h4 class="ui top attached styled header">
-        {{ ('sylius.ui.payment')|trans }}
+        {{ ('sylius.ui.payments')|trans }}
     </h4>
+
+    <div class="ui top attached tabular menu">
+        {% for payment in order.payments %}
+            <a class="item {% if loop.first %}active{% endif %}" data-tab="payment_{{ loop.index }}">{{ loop.index }}</a>
+        {% endfor %}
+    </div>
+
     {% for payment in order.payments %}
-        <div class="ui attached segment" id="order-changes">
+        <div class="ui bottom attached tab segment {% if loop.first %}active{% endif %}" data-tab="payment_{{ loop.index }}" id="payment-changes-{{ loop.index }}">
             {{ render(url('brille24_admin_partial_payment_log_entry_index', {'id': payment.id})) }}
         </div>
     {% endfor %}

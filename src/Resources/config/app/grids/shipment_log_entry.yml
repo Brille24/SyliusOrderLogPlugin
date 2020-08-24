@@ -9,6 +9,7 @@ sylius_grid:
                         method: createByObjectIdQueryBuilder
                         arguments:
                             objectId: $id
+            limits: [100]
             fields:
                 action:
                     type: twig
