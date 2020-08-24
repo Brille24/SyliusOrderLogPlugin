@@ -5,7 +5,7 @@
         </id>
 
         <field name="orderId" type="integer" column="order_id" />
-        <field name="shipmentId" type="integer" column="shipment_id" />
+        <field name="objectId" type="integer" column="object_id" />
         <field name="date" type="datetime" />
         <field name="action" />
         <field name="data" type="json" />

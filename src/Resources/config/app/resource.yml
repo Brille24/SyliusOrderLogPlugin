@@ -4,11 +4,16 @@ sylius_resource:
       classes:
         model: 'Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry'
         interface: 'Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntryInterface'
+        repository: 'Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceLogEntryRepository'
+
     brille24.payment_log_entry:
       classes:
         model: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry'
         interface: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntryInterface'
+        repository: 'Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceLogEntryRepository'
+
     brille24.shipment_log_entry:
       classes:
         model: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry'
         interface: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntryInterface'
+        repository: 'Sylius\Bundle\ResourceBundle\Doctrine\ORM\ResourceLogEntryRepository'

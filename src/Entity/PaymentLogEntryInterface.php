@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Entity;
 
-interface PaymentLogEntryInterface
+interface PaymentLogEntryInterface extends LogEntryInterface
 {
     public function getOrderId(): int;
 
-    public function setOrderId(int $order): void;
-
-    public function getPaymentId(): int;
-
-    public function setPaymentId(int $payment): void;
+    public function setOrderId(int $orderId): void;
 }

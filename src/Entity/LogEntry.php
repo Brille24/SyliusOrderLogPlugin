@@ -23,6 +23,9 @@ abstract class LogEntry implements LogEntryInterface
     /** @var array<mixed> */
     protected $data;
 
+    /** @var int */
+    protected $objectId;
+
     public function getId(): int
     {
         return $this->id;
@@ -66,5 +69,15 @@ abstract class LogEntry implements LogEntryInterface
     public function setData(array $data): void
     {
         $this->data = $data;
+    }
+
+    public function getObjectId(): int
+    {
+        return $this->objectId;
+    }
+
+    public function setObjectId(int $objectId): void
+    {
+        $this->objectId = $objectId;
     }
 }

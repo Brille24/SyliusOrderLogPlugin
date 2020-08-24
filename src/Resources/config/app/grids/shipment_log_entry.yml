@@ -6,9 +6,9 @@ sylius_grid:
                 options:
                     class: "%brille24.model.shipment_log_entry.class%"
                     repository:
-                        method: findBy
+                        method: createByObjectIdQueryBuilder
                         arguments:
-                            criteria: { shipmentId: $id }
+                            objectId: $id
             fields:
                 action:
                     type: twig

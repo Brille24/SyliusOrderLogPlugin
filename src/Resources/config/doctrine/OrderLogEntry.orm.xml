@@ -4,7 +4,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="orderId" type="integer" column="order_id" />
+        <field name="objectId" type="integer" column="object_id" />
         <field name="date" type="datetime" />
         <field name="action" />
         <field name="data" type="json" />

@@ -42,7 +42,7 @@ class ShipmentListener implements EventSubscriberInterface
         $loggedData = [];
         /** @var LogEntryInterface $log */
         foreach ($this->shipmentLogRepository->findBy(
-            ['shipmentId' => $event->getShipment()->getId()],
+            ['objectId' => $event->getShipment()->getId()],
             ['date' => 'ASC']
         ) as $log) {
             $loggedData = array_merge($loggedData, $log->getData());
@@ -61,7 +61,7 @@ class ShipmentListener implements EventSubscriberInterface
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setOrderId($event->getOrder()->getId());
-        $logEntry->setShipmentId($event->getShipment()->getId());
+        $logEntry->setObjectId($event->getShipment()->getId());
         $logEntry->setData($difference);
 
         $this->entityManager->persist($logEntry);
