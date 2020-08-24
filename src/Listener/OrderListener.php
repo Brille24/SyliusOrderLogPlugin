@@ -48,6 +48,11 @@ class OrderListener implements EventSubscriberInterface
         // Get data difference
         $difference = array_diff_assoc($event->getData(), $loggedData);
 
+        // Don't log empty data
+        if (0 === count($difference)) {
+            return;
+        }
+
         // Save difference to that state
         $logEntry = new OrderLogEntry();
 

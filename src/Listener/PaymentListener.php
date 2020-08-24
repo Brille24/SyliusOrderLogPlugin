@@ -48,6 +48,11 @@ class PaymentListener implements EventSubscriberInterface
         // Get data difference
         $difference = array_diff_assoc($event->getData(), $loggedData);
 
+        // Don't log empty data
+        if (0 === count($difference)) {
+            return;
+        }
+
         $logEntry = new PaymentLogEntry();
 
         $user = $this->tokenStorage->getToken()->getUser();
