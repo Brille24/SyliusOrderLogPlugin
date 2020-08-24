@@ -14,7 +14,7 @@ abstract class LogEntry implements LogEntryInterface
     /** @var \DateTime */
     protected $date;
 
-    /** @var AdminUserInterface */
+    /** @var ?AdminUserInterface */
     protected $user;
 
     /** @var string */
@@ -41,12 +41,12 @@ abstract class LogEntry implements LogEntryInterface
         $this->date = $date;
     }
 
-    public function getUser(): AdminUserInterface
+    public function getUser(): ?AdminUserInterface
     {
         return $this->user;
     }
 
-    public function setUser(AdminUserInterface $user): void
+    public function setUser(?AdminUserInterface $user): void
     {
         $this->user = $user;
     }

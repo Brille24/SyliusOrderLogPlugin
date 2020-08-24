@@ -17,9 +17,9 @@ interface LogEntryInterface extends ResourceInterface
 
     public function setDate(\DateTime $date): void;
 
-    public function getUser(): AdminUserInterface;
+    public function getUser(): ?AdminUserInterface;
 
-    public function setUser(AdminUserInterface $user): void;
+    public function setUser(?AdminUserInterface $user): void;
 
     public function getAction(): string;
 
