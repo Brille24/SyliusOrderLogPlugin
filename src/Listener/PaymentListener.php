@@ -38,18 +38,21 @@ class PaymentListener implements EventSubscriberInterface
 
     public function logPayment(PaymentLogEvent $event): void
     {
-        // Rebuild last logged data
-        $loggedData = [];
-        /** @var LogEntryInterface $log */
-        foreach ($this->paymentLogRepository->findBy(['objectId' => $event->getPayment()->getId()], ['date' => 'ASC']) as $log) {
-            $loggedData = array_merge($loggedData, $log->getData());
+        $data = $event->getData();
+        if ($event->onlyDifferences()) {
+            // Rebuild last logged data
+            $loggedData = [];
+            /** @var LogEntryInterface $log */
+            foreach ($this->paymentLogRepository->findBy(['objectId' => $event->getPayment()->getId()], ['date' => 'ASC']) as $log) {
+                $loggedData = array_merge($loggedData, $log->getData());
+            }
+
+            // Get data difference
+            $data = array_diff_assoc($event->getData(), $loggedData);
         }
 
-        // Get data difference
-        $difference = array_diff_assoc($event->getData(), $loggedData);
-
         // Don't log empty data
-        if (0 === count($difference)) {
+        if (0 === count($data)) {
             return;
         }
 
@@ -64,7 +67,7 @@ class PaymentListener implements EventSubscriberInterface
         $logEntry->setAction($event->getAction());
         $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setObjectId($event->getPayment()->getId());
-        $logEntry->setData($difference);
+        $logEntry->setData($data);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();

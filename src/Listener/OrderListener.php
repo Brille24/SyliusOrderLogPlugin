@@ -38,18 +38,21 @@ class OrderListener implements EventSubscriberInterface
 
     public function logOrder(OrderLogEvent $event): void
     {
-        // Rebuild last logged data
-        $loggedData = [];
-        /** @var LogEntryInterface $log */
-        foreach ($this->orderLogRepository->findBy(['objectId' => $event->getOrder()->getId()], ['date' => 'ASC']) as $log) {
-            $loggedData = array_merge($loggedData, $log->getData());
+        $data = $event->getData();
+        if ($event->onlyDifferences()) {
+            // Rebuild last logged data
+            $loggedData = [];
+            /** @var LogEntryInterface $log */
+            foreach ($this->orderLogRepository->findBy(['objectId' => $event->getOrder()->getId()], ['date' => 'ASC']) as $log) {
+                $loggedData = array_merge($loggedData, $log->getData());
+            }
+
+            // Get data difference
+            $data = array_diff_assoc($event->getData(), $loggedData);
         }
 
-        // Get data difference
-        $difference = array_diff_assoc($event->getData(), $loggedData);
-
         // Don't log empty data
-        if (0 === count($difference)) {
+        if (0 === count($data)) {
             return;
         }
 
@@ -63,7 +66,7 @@ class OrderListener implements EventSubscriberInterface
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setObjectId($event->getOrder()->getId());
-        $logEntry->setData($difference);
+        $logEntry->setData($data);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();

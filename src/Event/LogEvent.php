@@ -14,12 +14,16 @@ abstract class LogEvent extends GenericEvent
     /** @var array<mixed> */
     private $data;
 
-    public function __construct($subject, string $action, array $data)
+    /** @var bool */
+    private $onlyDifferences;
+
+    public function __construct($subject, string $action, array $data, bool $onlyDifferences = true)
     {
         parent::__construct($subject);
 
         $this->action = $action;
         $this->data = $data;
+        $this->onlyDifferences = $onlyDifferences;
     }
 
     public function getAction(): string
@@ -30,5 +34,10 @@ abstract class LogEvent extends GenericEvent
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function onlyDifferences(): bool
+    {
+        return $this->onlyDifferences;
     }
 }
