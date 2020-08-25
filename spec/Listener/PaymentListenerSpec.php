@@ -9,7 +9,6 @@ use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\PaymentInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Event\PaymentLogEvent;
-use Brille24\SyliusOrderLogPlugin\Listener\OrderListener;
 use Brille24\SyliusOrderLogPlugin\Listener\PaymentListener;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
@@ -31,7 +30,6 @@ class PaymentListenerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         RepositoryInterface $paymentLogRepository
     ): void {
-
         $this->beConstructedWith($tokenStorage, $entityManager, $paymentLogRepository);
     }
 

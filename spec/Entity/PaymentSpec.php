@@ -25,7 +25,7 @@ class PaymentSpec extends ObjectBehavior
             'method' => 'method_code',
             'currencyCode' => 'EUR',
             'amount' => 123,
-            'details' => '{"bla":"bla"}'
+            'details' => '{"bla":"bla"}',
         ]);
     }
 }
