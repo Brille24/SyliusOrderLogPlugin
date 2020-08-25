@@ -39,6 +39,7 @@
     },
     "autoload": {
         "psr-4": {
+            "spec\\Brille24\\SyliusOrderLogPlugin\\": "spec/",
             "Brille24\\SyliusOrderLogPlugin\\": "src/",
             "Tests\\Brille24\\SyliusOrderLogPlugin\\": "tests/"
         }
@@ -53,10 +54,10 @@
     },
     "scripts": {
         "analyse": [
-            "vendor/bin/ecs check src --config etc/coding-standard.yml --no-progress-bar"
+            "vendor/bin/ecs check src spec --config etc/coding-standard.yml --no-progress-bar"
         ],
         "fix": [
-            "vendor/bin/ecs check src --config etc/coding-standard.yml --fix --ansi"
+            "vendor/bin/ecs check src spec --config etc/coding-standard.yml --fix --ansi"
         ]
     }
 }
