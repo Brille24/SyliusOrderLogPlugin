@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brille24\SyliusOrderLogPlugin;
+namespace Brille24\SyliusOrderLogPlugin\Entity;
 
 trait OrderLoggableTrait
 {

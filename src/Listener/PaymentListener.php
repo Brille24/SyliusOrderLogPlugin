@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class PaymentListener implements EventSubscriberInterface
 {
+    use LogListenerTrait;
+
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
@@ -24,35 +26,21 @@ class PaymentListener implements EventSubscriberInterface
     protected $entityManager;
 
     /** @var RepositoryInterface */
-    protected $paymentLogRepository;
+    protected $logEntryRepository;
 
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EntityManagerInterface $entityManager,
-        RepositoryInterface $paymentLogRepository
+        RepositoryInterface $logEntryRepository
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->paymentLogRepository = $paymentLogRepository;
+        $this->logEntryRepository = $logEntryRepository;
     }
 
     public function logPayment(PaymentLogEvent $event): void
     {
-        $data = $event->getData();
-        if ($event->onlyDifferences()) {
-            // Rebuild last logged data
-            $loggedData = [];
-            /** @var LogEntryInterface $log */
-            foreach ($this->paymentLogRepository->findBy(
-                ['objectId' => $event->getPayment()->getId()],
-                ['date' => 'ASC']
-            ) as $log) {
-                $loggedData = array_merge($loggedData, $log->getData());
-            }
-
-            // Get data difference
-            $data = array_diff_assoc($event->getData(), $loggedData);
-        }
+        $data = $this->getDataToLog($event, $event->getPayment()->getId());
 
         // Don't log empty data
         if (0 === count($data)) {
@@ -60,17 +48,13 @@ class PaymentListener implements EventSubscriberInterface
         }
 
         $logEntry = new PaymentLogEntry();
-
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        if ($user instanceof AdminUserInterface) {
-            $logEntry->setUser($user);
-        }
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setObjectId($event->getPayment()->getId());
         $logEntry->setData($data);
+
+        $this->handleUser($logEntry);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();

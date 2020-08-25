@@ -16,6 +16,9 @@ class ShipmentLogEvent extends LogEvent
 
     public function getOrder(): OrderInterface
     {
-        return $this->getShipment()->getOrder();
+        /** @var OrderInterface $order */
+        $order = $this->getShipment()->getOrder();
+
+        return $order;
     }
 }
