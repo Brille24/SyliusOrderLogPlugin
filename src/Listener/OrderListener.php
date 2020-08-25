@@ -43,7 +43,10 @@ class OrderListener implements EventSubscriberInterface
             // Rebuild last logged data
             $loggedData = [];
             /** @var LogEntryInterface $log */
-            foreach ($this->orderLogRepository->findBy(['objectId' => $event->getOrder()->getId()], ['date' => 'ASC']) as $log) {
+            foreach ($this->orderLogRepository->findBy(
+                ['objectId' => $event->getOrder()->getId()],
+                ['date' => 'ASC']
+            ) as $log) {
                 $loggedData = array_merge($loggedData, $log->getData());
             }
 

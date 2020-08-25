@@ -43,7 +43,10 @@ class PaymentListener implements EventSubscriberInterface
             // Rebuild last logged data
             $loggedData = [];
             /** @var LogEntryInterface $log */
-            foreach ($this->paymentLogRepository->findBy(['objectId' => $event->getPayment()->getId()], ['date' => 'ASC']) as $log) {
+            foreach ($this->paymentLogRepository->findBy(
+                ['objectId' => $event->getPayment()->getId()],
+                ['date' => 'ASC']
+            ) as $log) {
                 $loggedData = array_merge($loggedData, $log->getData());
             }
 
