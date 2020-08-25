@@ -22,9 +22,9 @@ class OrderListenerSpec extends ObjectBehavior
 {
     private const DATA = [
         'state' => 'new',
-        'payment_state' => 'paid',
-        'checkout_state' => 'finished',
-        'shipping_state' => 'ready',
+        'paymentState' => 'paid',
+        'checkoutState' => 'finished',
+        'shippingState' => 'ready',
     ];
 
     public function let(
@@ -58,7 +58,7 @@ class OrderListenerSpec extends ObjectBehavior
         $this->setUp($tokenStorage, $logEntry, $token, $adminUser, $order);
         $orderLogRepository->findBy(['objectId' => 1], ['date' => 'ASC'])->shouldBeCalled()->willReturn([$logEntry]);
 
-        $expectedData = ['payment_state' => 'paid'];
+        $expectedData = ['paymentState' => 'paid'];
 
         $entityManager->persist(Argument::which('getData', $expectedData))->shouldBeCalled();
         $entityManager->flush()->shouldBeCalled();
@@ -93,9 +93,9 @@ class OrderListenerSpec extends ObjectBehavior
     ): void {
         $logEntry->getData()->willReturn([
             'state' => 'new',
-            'payment_state' => 'awaiting_payment',
-            'checkout_state' => 'finished',
-            'shipping_state' => 'ready',
+            'paymentState' => 'awaiting_payment',
+            'checkoutState' => 'finished',
+            'shippingState' => 'ready',
         ]);
 
         $order->getId()->shouldBeCalled()->willReturn(1);
