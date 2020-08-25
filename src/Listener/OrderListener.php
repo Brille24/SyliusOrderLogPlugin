@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class OrderListener implements EventSubscriberInterface
 {
+    use LogListenerTrait;
+
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
@@ -24,49 +26,34 @@ class OrderListener implements EventSubscriberInterface
     protected $entityManager;
 
     /** @var RepositoryInterface */
-    protected $orderLogRepository;
+    protected $logEntryRepository;
 
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EntityManagerInterface $entityManager,
-        RepositoryInterface $orderLogRepository
+        RepositoryInterface $logEntryRepository
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->orderLogRepository = $orderLogRepository;
+        $this->logEntryRepository = $logEntryRepository;
     }
 
     public function logOrder(OrderLogEvent $event): void
     {
-        $data = $event->getData();
-        if ($event->onlyDifferences()) {
-            // Rebuild last logged data
-            $loggedData = [];
-            /** @var LogEntryInterface $log */
-            foreach ($this->orderLogRepository->findBy(['objectId' => $event->getOrder()->getId()], ['date' => 'ASC']) as $log) {
-                $loggedData = array_merge($loggedData, $log->getData());
-            }
-
-            // Get data difference
-            $data = array_diff_assoc($event->getData(), $loggedData);
-        }
+        $data = $this->getDataToLog($event, $event->getOrder()->getId());
 
         // Don't log empty data
         if (0 === count($data)) {
             return;
         }
 
-        // Save difference to that state
         $logEntry = new OrderLogEntry();
-
-        $user = $this->tokenStorage->getToken()->getUser();
-        if ($user instanceof AdminUserInterface) {
-            $logEntry->setUser($user);
-        }
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setObjectId($event->getOrder()->getId());
         $logEntry->setData($data);
+
+        $this->handleUser($logEntry);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();

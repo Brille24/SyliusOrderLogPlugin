@@ -16,6 +16,9 @@ class PaymentLogEvent extends LogEvent
 
     public function getOrder(): OrderInterface
     {
-        return $this->getPayment()->getOrder();
+        /** @var OrderInterface $order */
+        $order = $this->getPayment()->getOrder();
+
+        return $order;
     }
 }

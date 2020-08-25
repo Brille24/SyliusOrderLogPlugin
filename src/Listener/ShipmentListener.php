@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ShipmentListener implements EventSubscriberInterface
 {
+    use LogListenerTrait;
+
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
@@ -24,35 +26,21 @@ class ShipmentListener implements EventSubscriberInterface
     protected $entityManager;
 
     /** @var RepositoryInterface */
-    protected $shipmentLogRepository;
+    protected $logEntryRepository;
 
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EntityManagerInterface $entityManager,
-        RepositoryInterface $shipmentLogRepository
+        RepositoryInterface $logEntryRepository
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->shipmentLogRepository = $shipmentLogRepository;
+        $this->logEntryRepository = $logEntryRepository;
     }
 
     public function logShipment(ShipmentLogEvent $event): void
     {
-        $data = $event->getData();
-        if ($event->onlyDifferences()) {
-            // Rebuild last logged data
-            $loggedData = [];
-            /** @var LogEntryInterface $log */
-            foreach ($this->shipmentLogRepository->findBy(
-                ['objectId' => $event->getShipment()->getId()],
-                ['date' => 'ASC']
-            ) as $log) {
-                $loggedData = array_merge($loggedData, $log->getData());
-            }
-
-            // Get data difference
-            $data = array_diff_assoc($event->getData(), $loggedData);
-        }
+        $data = $this->getDataToLog($event, $event->getShipment()->getId());
 
         // Don't log empty data
         if (0 === count($data)) {
@@ -60,17 +48,13 @@ class ShipmentListener implements EventSubscriberInterface
         }
 
         $logEntry = new ShipmentLogEntry();
-
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        if ($user instanceof AdminUserInterface) {
-            $logEntry->setUser($user);
-        }
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
         $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setObjectId($event->getShipment()->getId());
         $logEntry->setData($data);
+
+        $this->handleUser($logEntry);
 
         $this->entityManager->persist($logEntry);
         $this->entityManager->flush();
