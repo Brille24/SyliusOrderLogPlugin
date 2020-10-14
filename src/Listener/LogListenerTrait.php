@@ -17,10 +17,7 @@ trait LogListenerTrait
             // Rebuild last logged data
             $loggedData = [];
             /** @var LogEntryInterface $log */
-            foreach ($this->logEntryRepository->findBy(
-                ['objectId' => $objectId],
-                ['date' => 'ASC']
-            ) as $log) {
+            foreach ($this->logEntryRepository->findBy(['objectId' => $objectId], ['date' => 'ASC']) as $log) {
                 $loggedData = array_merge($loggedData, $log->getData());
             }
 
