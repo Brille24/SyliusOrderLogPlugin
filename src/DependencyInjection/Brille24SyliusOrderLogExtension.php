@@ -23,9 +23,11 @@ final class Brille24SyliusOrderLogExtension extends Extension implements Prepend
         $loader->load('services.xml');
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
-        if (!$container->hasExtension('doctrine_migrations') || !$container->hasExtension('sylius_labs_doctrine_migrations_extra')) {
+        if (!$container->hasExtension('doctrine_migrations') || !$container->hasExtension(
+            'sylius_labs_doctrine_migrations_extra'
+        )) {
             return;
         }
 
