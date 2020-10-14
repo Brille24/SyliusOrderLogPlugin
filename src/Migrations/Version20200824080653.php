@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\Migrations;
+namespace Brille24\SyliusOrderLogPlugin\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
