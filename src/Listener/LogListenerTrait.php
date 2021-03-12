@@ -22,7 +22,7 @@ trait LogListenerTrait
         TokenStorageInterface $tokenStorage,
         RepositoryInterface $logEntryRepository
     ) {
-        $this->tokenStorage = $tokenStorage,
+        $this->tokenStorage = $tokenStorage;
         $this->logEntryRepository = $logEntryRepository;
     }
 
