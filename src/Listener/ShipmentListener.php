@@ -16,25 +16,21 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ShipmentListener implements EventSubscriberInterface
 {
-    use LogListenerTrait;
-
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
+    use LogListenerTrait {
+        __construct as private init;
+    }
 
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /** @var RepositoryInterface */
-    protected $logEntryRepository;
-
     public function __construct(
         TokenStorageInterface $tokenStorage,
-        EntityManagerInterface $entityManager,
-        RepositoryInterface $logEntryRepository
+        RepositoryInterface $logEntryRepository,
+        EntityManagerInterface $entityManager
     ) {
-        $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->logEntryRepository = $logEntryRepository;
+
+        $this->init($tokenStorage, $logEntryRepository);
     }
 
     public function logShipment(ShipmentLogEvent $event): void
