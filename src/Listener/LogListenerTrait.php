@@ -26,7 +26,7 @@ trait LogListenerTrait
         $this->logEntryRepository = $logEntryRepository;
     }
 
-    private function getDataToLog(LogEvent $event, int $objectId): array
+    private function getDataToLog(LogEvent $event, $objectId): array
     {
         $data = $event->getData();
         if ($event->onlyDifferences()) {
