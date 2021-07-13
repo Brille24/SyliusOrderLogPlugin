@@ -23,7 +23,7 @@ abstract class LogEntry implements LogEntryInterface
     /** @var array<mixed> */
     protected $data;
 
-    /** @var int */
+    /** @var mixed */
     protected $objectId;
 
     public function getId(): int
@@ -71,12 +71,14 @@ abstract class LogEntry implements LogEntryInterface
         $this->data = $data;
     }
 
-    public function getObjectId(): int
+    /** {@inheritdoc} */
+    public function getObjectId()
     {
         return $this->objectId;
     }
 
-    public function setObjectId(int $objectId): void
+    /** {@inheritdoc} */
+    public function setObjectId($objectId): void
     {
         $this->objectId = $objectId;
     }

@@ -29,7 +29,13 @@ interface LogEntryInterface extends ResourceInterface
 
     public function setData(array $data): void;
 
-    public function getObjectId(): int;
+    /**
+     * @return mixed
+     */
+    public function getObjectId();
 
-    public function setObjectId(int $objectId): void;
+    /**
+     * @param mixed $objectId
+     */
+    public function setObjectId($objectId): void;
 }
