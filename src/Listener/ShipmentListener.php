@@ -45,6 +45,7 @@ class ShipmentListener implements EventSubscriberInterface
         $logEntry = new ShipmentLogEntry();
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
+        /** @psalm-suppress MixedArgument */
         $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setObjectId($event->getShipment()->getId());
         $logEntry->setData($data);

@@ -9,6 +9,10 @@ use Brille24\SyliusOrderLogPlugin\Entity\PaymentInterface;
 
 class PaymentLogEvent extends LogEvent
 {
+    /**
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MixedReturnStatement
+     */
     public function getPayment(): PaymentInterface
     {
         return $this->getSubject();

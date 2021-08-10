@@ -9,6 +9,11 @@ class PaymentLogEntry extends LogEntry implements PaymentLogEntryInterface
     /** @var int */
     protected $orderId;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getOrderId(): int
     {
         return $this->orderId;

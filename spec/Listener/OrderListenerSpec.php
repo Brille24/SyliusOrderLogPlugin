@@ -32,7 +32,7 @@ class OrderListenerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         RepositoryInterface $orderLogRepository
     ): void {
-        $this->beConstructedWith($tokenStorage, $entityManager, $orderLogRepository);
+        $this->beConstructedWith($tokenStorage, $orderLogRepository, $entityManager);
     }
 
     public function it_is_initializable()

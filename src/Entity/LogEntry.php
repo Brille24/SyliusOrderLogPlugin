@@ -15,16 +15,21 @@ abstract class LogEntry implements LogEntryInterface
     protected $date;
 
     /** @var ?AdminUserInterface */
-    protected $user;
+    protected $user = null;
 
     /** @var string */
-    protected $action;
+    protected $action = LogEntryInterface::ACTION_CREATE;
 
     /** @var array<mixed> */
-    protected $data;
+    protected $data = [];
 
     /** @var mixed */
-    protected $objectId;
+    protected $objectId = null;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     public function getId(): int
     {

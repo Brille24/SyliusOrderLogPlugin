@@ -8,6 +8,7 @@ trait ShipmentLoggableTrait
 {
     public function getLoggableData(): array
     {
+        /** @psalm-suppress PossiblyNullReference */
         return [
             'state' => $this->getState(),
             'method' => null !== $this->getMethod() ? $this->getMethod()->getCode() : null,
