@@ -30,7 +30,7 @@ class PaymentListenerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         RepositoryInterface $paymentLogRepository
     ): void {
-        $this->beConstructedWith($tokenStorage, $entityManager, $paymentLogRepository);
+        $this->beConstructedWith($tokenStorage, $paymentLogRepository, $entityManager);
     }
 
     public function it_is_initializable()
