@@ -47,7 +47,7 @@ final class Brille24SyliusOrderLogExtension extends Extension implements Prepend
         return ['Sylius\Bundle\CoreBundle\Migrations'];
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $this->prependDoctrineMigrations($container);
     }

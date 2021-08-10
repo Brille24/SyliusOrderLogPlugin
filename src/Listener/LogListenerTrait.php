@@ -26,6 +26,12 @@ trait LogListenerTrait
         $this->logEntryRepository = $logEntryRepository;
     }
 
+    /**
+     * @param LogEvent $event
+     * @param mixed $objectId
+     *
+     * @return array
+     */
     private function getDataToLog(LogEvent $event, $objectId): array
     {
         $data = $event->getData();
