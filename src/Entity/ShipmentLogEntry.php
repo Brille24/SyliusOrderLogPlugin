@@ -9,6 +9,11 @@ class ShipmentLogEntry extends LogEntry implements ShipmentLogEntryInterface
     /** @var int */
     protected $orderId;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getOrderId(): int
     {
         return $this->orderId;

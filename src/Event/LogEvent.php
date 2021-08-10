@@ -11,12 +11,18 @@ abstract class LogEvent extends GenericEvent
     /** @var string */
     private $action;
 
-    /** @var array<mixed> */
+    /** @var array */
     private $data;
 
     /** @var bool */
     private $onlyDifferences;
 
+    /**
+     * @param mixed $subject
+     * @param string $action
+     * @param array $data
+     * @param bool $onlyDifferences
+     */
     public function __construct($subject, string $action, array $data, bool $onlyDifferences = true)
     {
         parent::__construct($subject);

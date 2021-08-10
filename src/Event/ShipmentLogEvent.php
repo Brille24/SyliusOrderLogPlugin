@@ -9,6 +9,10 @@ use Brille24\SyliusOrderLogPlugin\Entity\ShipmentInterface;
 
 class ShipmentLogEvent extends LogEvent
 {
+    /**
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MixedReturnStatement
+     */
     public function getShipment(): ShipmentInterface
     {
         return $this->getSubject();

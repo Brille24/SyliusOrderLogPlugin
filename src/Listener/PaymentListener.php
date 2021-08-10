@@ -45,6 +45,7 @@ class PaymentListener implements EventSubscriberInterface
         $logEntry = new PaymentLogEntry();
         $logEntry->setDate(new \DateTime('now'));
         $logEntry->setAction($event->getAction());
+        /** @psalm-suppress MixedArgument */
         $logEntry->setOrderId($event->getOrder()->getId());
         $logEntry->setObjectId($event->getPayment()->getId());
         $logEntry->setData($data);

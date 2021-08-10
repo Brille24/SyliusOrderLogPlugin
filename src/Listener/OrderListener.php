@@ -10,6 +10,8 @@ use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -80,16 +82,20 @@ class OrderListener implements EventSubscriberInterface
 
     public function updatePayment(ResourceControllerEvent $event): void
     {
+        /** @var PaymentInterface $payment */
+        $payment = $event->getSubject();
         /** @var OrderInterface $order */
-        $order = $event->getSubject()->getOrder();
+        $order = $payment->getOrder();
 
         $this->logOrder($this->getLogEvent($order, LogEntryInterface::ACTION_UPDATE));
     }
 
     public function updateShipment(ResourceControllerEvent $event): void
     {
+        /** @var ShipmentInterface  $shipment */
+        $shipment = $event->getSubject();
         /** @var OrderInterface $order */
-        $order = $event->getSubject()->getOrder();
+        $order = $shipment->getOrder();
 
         $this->logOrder($this->getLogEvent($order, LogEntryInterface::ACTION_UPDATE));
     }
