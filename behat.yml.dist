@@ -46,7 +46,7 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                class: Tests\Brille24\SyliusExamplePlugin\Application\Kernel
+                class: Tests\Brille24\SyliusOrderLogPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
 
