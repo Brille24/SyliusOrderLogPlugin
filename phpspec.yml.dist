@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Brille24\SyliusOrderLogPlugin
-        psr4_prefix: Brille24\SyliusOrderLogPlugin
+        namespace: Brille24\SyliusExamplePlugin
+        psr4_prefix: Brille24\SyliusExamplePlugin
