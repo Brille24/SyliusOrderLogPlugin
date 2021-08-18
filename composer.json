@@ -51,7 +51,8 @@
         "psr-4": {
             "spec\\Brille24\\SyliusOrderLogPlugin\\": "spec/",
             "Brille24\\SyliusOrderLogPlugin\\": "src/",
-            "Tests\\Brille24\\SyliusOrderLogPlugin\\": "tests/"
+            "Tests\\Brille24\\SyliusOrderLogPlugin\\": "tests/",
+            "Tests\\Application\\SyliusOrderLogPlugin\\": "tests/Application/src/"
         }
     },
     "autoload-dev": {

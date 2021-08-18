@@ -13,3 +13,22 @@ parameters:
 sylius_shop:
     product_grid:
         include_all_descendants: true
+
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: 'Tests\Application\SyliusOrderLogPlugin\Entity\Order'
+
+sylius_payment:
+    resources:
+        payment:
+            classes:
+                model: 'Tests\Application\SyliusOrderLogPlugin\Entity\Payment'
+
+sylius_shipping:
+    resources:
+        shipment:
+            classes:
+                model: 'Tests\Application\SyliusOrderLogPlugin\Entity\Shipment'
