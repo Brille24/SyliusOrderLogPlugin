@@ -10,10 +10,10 @@ sylius_resource:
       classes:
         model: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry'
         interface: 'Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntryInterface'
-        repository: 'Brille24\SyliusOrderLogPlugin\Repository\OrderLogEntryRepository'
+        repository: 'Brille24\SyliusOrderLogPlugin\Repository\PaymentLogEntryRepository'
 
     brille24.shipment_log_entry:
       classes:
         model: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry'
         interface: 'Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntryInterface'
-        repository: 'Brille24\SyliusOrderLogPlugin\Repository\OrderLogEntryRepository'
+        repository: 'Brille24\SyliusOrderLogPlugin\Repository\ShipmentLogEntryRepository'
