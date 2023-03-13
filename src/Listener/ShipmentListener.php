@@ -8,10 +8,10 @@ use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry;
 use Brille24\SyliusOrderLogPlugin\Entity\ShipmentLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Event\ShipmentLogEvent;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\ShipmentInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Webmozart\Assert\Assert;
@@ -24,7 +24,7 @@ class ShipmentListener implements EventSubscriberInterface
 
     public function __construct(
         private TokenStorageInterface $tokenStorage,
-        private RepositoryInterface $logEntryRepository,
+        private LogEntryRepositoryInterface $logEntryRepository,
         private EntityManagerInterface $entityManager
     ) {
         $this->init($this->tokenStorage, $this->logEntryRepository);

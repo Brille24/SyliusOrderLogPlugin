@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace spec\Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Brille24\SyliusOrderLogPlugin\Listener\OrderListener;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\AdminUserInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Tests\Application\SyliusOrderLogPlugin\Entity\OrderInterface;
 
 class OrderListenerSpec extends ObjectBehavior
 {
@@ -30,7 +30,7 @@ class OrderListenerSpec extends ObjectBehavior
     public function let(
         TokenStorageInterface $tokenStorage,
         EntityManagerInterface $entityManager,
-        RepositoryInterface $orderLogRepository
+        LogEntryRepositoryInterface $orderLogRepository
     ): void {
         $this->beConstructedWith($tokenStorage, $orderLogRepository, $entityManager);
     }
@@ -47,7 +47,7 @@ class OrderListenerSpec extends ObjectBehavior
 
     public function it_logs_an_order_checking_for_differences(
         TokenStorageInterface $tokenStorage,
-        RepositoryInterface $orderLogRepository,
+        LogEntryRepositoryInterface $orderLogRepository,
         OrderInterface $order,
         EntityManagerInterface $entityManager,
         OrderLogEntryInterface $logEntry,

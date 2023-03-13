@@ -6,6 +6,7 @@ namespace Brille24\SyliusOrderLogPlugin\Event;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Webmozart\Assert\Assert;
 
 class PaymentLogEvent extends LogEvent
 {
@@ -15,7 +16,10 @@ class PaymentLogEvent extends LogEvent
      */
     public function getPayment(): PaymentInterface
     {
-        return $this->getSubject();
+        $return = $this->getSubject();
+        Assert::isInstanceOf($return, PaymentInterface::class);
+
+        return $return;
     }
 
     public function getOrder(): OrderInterface

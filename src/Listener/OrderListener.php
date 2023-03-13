@@ -8,12 +8,12 @@ use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Webmozart\Assert\Assert;
@@ -26,7 +26,7 @@ class OrderListener implements EventSubscriberInterface
 
     public function __construct(
         private TokenStorageInterface $tokenStorage,
-        private RepositoryInterface $logEntryRepository,
+        private LogEntryRepositoryInterface $logEntryRepository,
         private EntityManagerInterface $entityManager
     ) {
         $this->init($this->tokenStorage, $this->logEntryRepository);
