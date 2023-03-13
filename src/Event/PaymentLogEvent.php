@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Event;
 
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\PaymentInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
 
 class PaymentLogEvent extends LogEvent
 {

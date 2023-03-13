@@ -12,18 +12,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 trait LogListenerTrait
 {
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
-
-    /** @var RepositoryInterface */
-    protected $logEntryRepository;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        RepositoryInterface $logEntryRepository
+        private TokenStorageInterface $tokenStorage,
+        private RepositoryInterface $logEntryRepository
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->logEntryRepository = $logEntryRepository;
     }
 
     /**

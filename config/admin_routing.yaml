@@ -1,0 +1,12 @@
+# Define your own admin routes here
+order_logs:
+  prefix: '/_partial/order'
+  resource: 'routing/partial/order.yaml'
+
+payment_logs:
+  prefix: '/_partial/payment'
+  resource: 'routing/partial/payment.yaml'
+
+shipment_logs:
+  prefix: '/_partial/shipment'
+  resource: 'routing/partial/shipment.yaml'

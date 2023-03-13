@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Event;
 
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 
 class OrderLogEvent extends LogEvent
 {

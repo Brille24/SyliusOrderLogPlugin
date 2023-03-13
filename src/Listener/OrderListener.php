@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLogEntry;
+use Brille24\SyliusOrderLogPlugin\Entity\OrderLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Event\OrderLogEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Webmozart\Assert\Assert;
 
 class OrderListener implements EventSubscriberInterface
 {
@@ -22,17 +24,12 @@ class OrderListener implements EventSubscriberInterface
         __construct as private init;
     }
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        RepositoryInterface $logEntryRepository,
-        EntityManagerInterface $entityManager
+        private TokenStorageInterface $tokenStorage,
+        private RepositoryInterface $logEntryRepository,
+        private EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
-
-        $this->init($tokenStorage, $logEntryRepository);
+        $this->init($this->tokenStorage, $this->logEntryRepository);
     }
 
     public function logOrder(OrderLogEvent $event): void
@@ -100,7 +97,7 @@ class OrderListener implements EventSubscriberInterface
         $this->logOrder($this->getLogEvent($order, LogEntryInterface::ACTION_UPDATE));
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             OrderLogEvent::class => 'logOrder',
@@ -116,6 +113,8 @@ class OrderListener implements EventSubscriberInterface
 
     private function getLogEvent(OrderInterface $order, string $action): OrderLogEvent
     {
+        Assert::isInstanceOf($order, OrderLoggableInterface::class);
+
         return new OrderLogEvent($order, $action, $order->getLoggableData());
     }
 }

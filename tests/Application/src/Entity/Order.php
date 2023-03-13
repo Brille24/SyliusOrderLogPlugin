@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Application\SyliusOrderLogPlugin\Entity;
 
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
+use Brille24\SyliusOrderLogPlugin\Entity\OrderLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\OrderLoggableTrait;
+use Doctrine\ORM\Mapping as ORM;
 
-class Order extends \Sylius\Component\Core\Model\Order implements OrderInterface
+#[ORM\Entity]
+#[ORM\Table(name: 'sylius_order')]
+class Order extends \Sylius\Component\Core\Model\Order implements OrderLoggableInterface
 {
     use OrderLoggableTrait;
 }
