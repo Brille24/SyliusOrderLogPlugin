@@ -1,5 +1,0 @@
-imports:
-  - { resource: 'grids/order_log_entry.yml' }
-  - { resource: 'grids/payment_log_entry.yml' }
-  - { resource: 'grids/shipment_log_entry.yml' }
-  - { resource: 'resource.yml' }

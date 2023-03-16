@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Brille24\SyliusOrderLogPlugin\Event;
 
-use Brille24\SyliusOrderLogPlugin\Entity\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Webmozart\Assert\Assert;
 
 class OrderLogEvent extends LogEvent
 {
@@ -14,6 +15,9 @@ class OrderLogEvent extends LogEvent
      */
     public function getOrder(): OrderInterface
     {
-        return $this->getSubject();
+        $return = $this->getSubject();
+        Assert::isInstanceOf($return, OrderInterface::class);
+
+        return $return;
     }
 }

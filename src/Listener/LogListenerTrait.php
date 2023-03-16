@@ -6,24 +6,16 @@ namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
 use Brille24\SyliusOrderLogPlugin\Event\LogEvent;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Sylius\Component\Core\Model\AdminUserInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 trait LogListenerTrait
 {
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
-
-    /** @var RepositoryInterface */
-    protected $logEntryRepository;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        RepositoryInterface $logEntryRepository
+        private TokenStorageInterface $tokenStorage,
+        private LogEntryRepositoryInterface $logEntryRepository
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->logEntryRepository = $logEntryRepository;
     }
 
     /**

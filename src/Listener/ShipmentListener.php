@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\ShipmentInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\ShipmentLogEntry;
+use Brille24\SyliusOrderLogPlugin\Entity\ShipmentLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Event\ShipmentLogEvent;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Webmozart\Assert\Assert;
 
 class ShipmentListener implements EventSubscriberInterface
 {
@@ -20,17 +22,12 @@ class ShipmentListener implements EventSubscriberInterface
         __construct as private init;
     }
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        RepositoryInterface $logEntryRepository,
-        EntityManagerInterface $entityManager
+        private TokenStorageInterface $tokenStorage,
+        private LogEntryRepositoryInterface $logEntryRepository,
+        private EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
-
-        $this->init($tokenStorage, $logEntryRepository);
+        $this->init($this->tokenStorage, $this->logEntryRepository);
     }
 
     public function logShipment(ShipmentLogEvent $event): void
@@ -80,7 +77,7 @@ class ShipmentListener implements EventSubscriberInterface
         $this->logShipment($this->getLogEvent($shipment, LogEntryInterface::ACTION_DELETE));
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ShipmentLogEvent::class => 'logShipment',
@@ -93,6 +90,8 @@ class ShipmentListener implements EventSubscriberInterface
 
     private function getLogEvent(ShipmentInterface $shipment, string $action): ShipmentLogEvent
     {
+        Assert::isInstanceOf($shipment, ShipmentLoggableInterface::class);
+
         return new ShipmentLogEvent($shipment, $action, $shipment->getLoggableData());
     }
 }

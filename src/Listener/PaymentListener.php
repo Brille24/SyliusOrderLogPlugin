@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Brille24\SyliusOrderLogPlugin\Listener;
 
 use Brille24\SyliusOrderLogPlugin\Entity\LogEntryInterface;
-use Brille24\SyliusOrderLogPlugin\Entity\PaymentInterface;
 use Brille24\SyliusOrderLogPlugin\Entity\PaymentLogEntry;
+use Brille24\SyliusOrderLogPlugin\Entity\PaymentLoggableInterface;
 use Brille24\SyliusOrderLogPlugin\Event\PaymentLogEvent;
+use Brille24\SyliusOrderLogPlugin\Repository\LogEntryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Webmozart\Assert\Assert;
 
 class PaymentListener implements EventSubscriberInterface
 {
@@ -20,17 +22,12 @@ class PaymentListener implements EventSubscriberInterface
         __construct as private init;
     }
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        RepositoryInterface $logEntryRepository,
-        EntityManagerInterface $entityManager
+        private TokenStorageInterface $tokenStorage,
+        private LogEntryRepositoryInterface $logEntryRepository,
+        private EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
-
-        $this->init($tokenStorage, $logEntryRepository);
+        $this->init($this->tokenStorage, $this->logEntryRepository);
     }
 
     public function logPayment(PaymentLogEvent $event): void
@@ -80,7 +77,7 @@ class PaymentListener implements EventSubscriberInterface
         $this->logPayment($this->getLogEvent($payment, LogEntryInterface::ACTION_DELETE));
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             PaymentLogEvent::class => 'logPayment',
@@ -93,6 +90,8 @@ class PaymentListener implements EventSubscriberInterface
 
     private function getLogEvent(PaymentInterface $payment, string $action): PaymentLogEvent
     {
+        Assert::isInstanceOf($payment, PaymentLoggableInterface::class);
+
         return new PaymentLogEvent($payment, $action, $payment->getLoggableData());
     }
 }

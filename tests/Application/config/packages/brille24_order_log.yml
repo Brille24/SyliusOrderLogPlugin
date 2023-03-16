@@ -1,2 +1,0 @@
-imports:
-  - { resource: '@Brille24SyliusOrderLogPlugin/Resources/config/app/config.yml' }

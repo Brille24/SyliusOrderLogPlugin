@@ -7,16 +7,13 @@ parameters:
 
 doctrine:
     dbal:
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: UTF8
-
         url: '%env(resolve:DATABASE_URL)%'
-
     orm:
-        mappings:
-            sylius_order:
-                type: xml
-                dir: '%kernel.project_dir%/src/Resources/config/doctrine'
-                is_bundle: false
-                prefix: Tests\Application\SyliusOrderLogPlugin\Entity
+        entity_managers:
+            default:
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: Tests\Application\SyliusOrderLogPlugin\Entity
