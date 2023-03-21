@@ -39,7 +39,7 @@ final class Brille24SyliusOrderLogExtension extends AbstractResourceExtension im
 
     protected function getMigrationsDirectory(): string
     {
-        return '@Brille24SyliusOrderLogPlugin/Migrations';
+        return '@Brille24SyliusOrderLogPlugin/src/Migrations';
     }
 
     protected function getNamespacesOfMigrationsExecutedBefore(): array
