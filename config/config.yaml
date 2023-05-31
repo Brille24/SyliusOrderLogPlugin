@@ -1,4 +1,0 @@
-imports:
-  - { resource: 'grids/order_log_entry.php' }
-  - { resource: 'grids/payment_log_entry.php' }
-  - { resource: 'grids/shipment_log_entry.php' }

@@ -1,5 +1,7 @@
-<container xmlns="http://symfony.com/schema/dic/services">
-
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service class="Brille24\SyliusOrderLogPlugin\Listener\OrderListener" id="brille24.sylius_order_log_plugin.listener.order_listener">
             <tag name="kernel.event_subscriber" />
@@ -19,6 +21,18 @@
             <argument type="service" id="brille24.repository.shipment_log_entry" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
-    </services>
 
+        <!-- Services for grids -->
+        <service id="Brille24\SyliusOrderLogPlugin\Grids\OrderLogEntryGrid" autoconfigure="true">
+            <argument>%brille24.model.order_log_entry.class%</argument>
+        </service>
+
+        <service id="Brille24\SyliusOrderLogPlugin\Grids\PaymentLogEntryGrid" autoconfigure="true">
+            <argument>%brille24.model.payment_log_entry.class%</argument>
+        </service>
+
+        <service id="Brille24\SyliusOrderLogPlugin\Grids\ShipmentLogEntryGrid" autoconfigure="true">
+            <argument>%brille24.model.shipment_log_entry.class%</argument>
+        </service>
+    </services>
 </container>
