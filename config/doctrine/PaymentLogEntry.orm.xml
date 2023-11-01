@@ -11,5 +11,10 @@
         <field name="data" type="json" />
 
         <many-to-one field="user" target-entity="Sylius\Component\Core\Model\AdminUserInterface"/>
+
+        <indexes>
+            <index name="order_idx" fields="orderId"/>
+            <index name="payment_idx" fields="objectId"/>
+        </indexes>
     </mapped-superclass>
 </doctrine-mapping>
