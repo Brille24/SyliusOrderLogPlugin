@@ -13,8 +13,8 @@
         <many-to-one field="user" target-entity="Sylius\Component\Core\Model\AdminUserInterface"/>
 
         <indexes>
-            <index name="order_idx" fields="orderId"/>
-            <index name="shipment_idx" fields="objectId"/>
+            <index name="b24_order_log_shipment_order_idx" fields="orderId"/>
+            <index name="b24_order_log_shipment_idx" fields="objectId"/>
         </indexes>
     </mapped-superclass>
 </doctrine-mapping>
