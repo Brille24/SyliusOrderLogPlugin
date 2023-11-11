@@ -12,7 +12,7 @@
         <many-to-one field="user" target-entity="Sylius\Component\Core\Model\AdminUserInterface"/>
 
         <indexes>
-            <index name="order_idx" fields="objectId"/>
+            <index name="b24_order_log_order_idx" fields="objectId"/>
         </indexes>
     </mapped-superclass>
 </doctrine-mapping>
