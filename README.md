@@ -8,6 +8,9 @@
 
 <p align="center">Skeleton for starting Sylius plugins.</p>
 
+> [!IMPORTANT]  
+> This plugin is being deprecated. If you're still using this plugin please open an issue. Otherwise this project will get archived soon.
+
 ## Documentation
 
 For a comprehensive guide on Sylius Plugins development please go to Sylius documentation,
